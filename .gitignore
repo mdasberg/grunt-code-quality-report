@@ -1,0 +1,9 @@
+.idea
+.ipr
+.iws
+
+node_modules
+npm-debug.log
+tmp
+result.json
+test/override

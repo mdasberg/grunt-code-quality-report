@@ -1,0 +1,44 @@
+{
+  "name": "grunt-code-quality-report",
+  "description": "Grunt code quality reporter",
+  "version": "0.1.0",
+  "homepage": "https://github.com/mdasberg/grunt-code-quality-report",
+  "author": {
+    "name": "Mischa Dasberg",
+    "email": "mischa@dasberg.nl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mdasberg/grunt-code-quality-report.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mdasberg/grunt-code-quality-report/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/mdasberg/grunt-code-quality-report/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt": "~0.4.1",
+    "xml2js": "~0.2.8",
+    "istanbul": "~0.1.44"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.1"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}

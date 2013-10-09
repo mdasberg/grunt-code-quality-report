@@ -1,6 +1,6 @@
 # grunt-code-quality-report
 
-> Grunt code quality reporter
+> Grunt plugin that reports on [Karma](https://github.com/karma-runner/karma) junit and coverage and [Jshint](http://www.jshint.com/) results as a code quality reporter.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -26,15 +26,15 @@ In your project's Gruntfile, add a section named `code_quality_report` to the da
 grunt.initConfig({
   code_quality_report: {
     options: {
-      // dir: 'test/results',
-      // file: 'result.json
+       dir: 'test/results',
+       file: 'result.json
     },
     your_target: {
-      // results: {
-        // junit: 'path/to/junit/dir/results-file.xml
-        // coverage: 'path/to/coverage/dir/*.json
-        // jshint: 'path/to/jshint/div/result-file.xml
-      // }
+       results: {
+         junit: 'path/to/junit/dir/results-file.xml
+         coverage: 'path/to/coverage/dir/*.json
+         jshint: 'path/to/jshint/div/result-file.xml
+       }
     },
   },
 })

@@ -7,6 +7,9 @@
         "name": "Mischa Dasberg",
         "email": "mischa@dasberg.nl"
     },
+    "contributors": [
+        "Remco Vlierman <rcvlierman@gmail.com>"
+    ],
     "repository": {
         "type": "git",
         "url": "git://github.com/mdasberg/grunt-code-quality-report.git"

@@ -23,7 +23,8 @@ module.exports = function (grunt) {
         var result = {
             junit: parseJunitResults(this.data.results.junit, this.options({dir: '.'})),
             coverage: parseCoverageResults(this.data.results.coverage),
-            jshint: parseJshintResults(this.data.results.jshint)
+            jshint: parseJshintResults(this.data.results.jshint),
+            e2e: parseE2eResults(this.data.results.e2e)
         };
 
         grunt.file.write(options.dir + '/' + options.file, JSON.stringify(result));
@@ -48,6 +49,27 @@ module.exports = function (grunt) {
         });
         return results;
     }
+
+    /**
+     * Parse the e2e results.
+     * @param fileName The filename.
+     * @returns {{junit: {}}}
+     */
+    function parseE2eResults(fileName) {
+        var results = [];
+        xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
+            res.testsuites.testsuite.forEach(function (testsuite) {
+                results.push({
+                    browser: testsuite.$.name,
+                    tests: Number(testsuite.$.tests),
+                    failures: Number(testsuite.$.failures),
+                    time: Number(testsuite.$.time)
+                });
+            });
+        });
+        return results;
+    }
+
 
     /**
      * Parse the coverage results

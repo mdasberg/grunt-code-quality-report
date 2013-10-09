@@ -37,6 +37,7 @@ module.exports = function (grunt) {
             default: {
                 results: {
                     junit: 'test/fixtures/junit/test-results.xml',
+                    e2e: 'test/fixtures/e2e/e2e.xml',
                     coverage: 'test/fixtures/coverage/*.json',
                     jshint: 'test/fixtures/jshint/jshint.xml'
                 }
@@ -48,6 +49,7 @@ module.exports = function (grunt) {
                 },
                 results: {
                     junit: 'test/fixtures/junit/test-results.xml',
+                    e2e: 'test/fixtures/e2e/e2e.xml',
                     coverage: 'test/fixtures/coverage/*.json',
                     jshint: 'test/fixtures/jshint/jshint.xml'
                 }

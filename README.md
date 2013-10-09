@@ -27,13 +27,13 @@ grunt.initConfig({
   code_quality_report: {
     options: {
        dir: 'test/results',
-       file: 'result.json
+       file: 'result.json'
     },
     your_target: {
        results: {
-         junit: 'path/to/junit/dir/results-file.xml
-         coverage: 'path/to/coverage/dir/*.json
-         jshint: 'path/to/jshint/div/result-file.xml
+         junit: 'path/to/junit/dir/results-file.xml'
+         coverage: 'path/to/coverage/dir/*.json'
+         jshint: 'path/to/jshint/div/result-file.xml'
        }
     },
   },
@@ -65,9 +65,9 @@ grunt.initConfig({
     options: {},
     your_target: {
        results: {
-         junit: 'path/to/junit/dir/results-file.xml
-         coverage: 'path/to/coverage/dir/*.json
-         jshint: 'path/to/jshint/div/result-file.xml
+         junit: 'path/to/junit/dir/results-file.xml'
+         coverage: 'path/to/coverage/dir/*.json'
+         jshint: 'path/to/jshint/div/result-file.xml'
        }
     },
   },
@@ -82,13 +82,13 @@ grunt.initConfig({
   code_quality_report: {
     options: {
        dir: 'test/results',
-       file: 'result.json
+       file: 'result.json'
     },
     your_target: {
        results: {
-         junit: 'path/to/junit/dir/results-file.xml
-         coverage: 'path/to/coverage/dir/*.json
-         jshint: 'path/to/jshint/div/result-file.xml
+         junit: 'path/to/junit/dir/results-file.xml'
+         coverage: 'path/to/coverage/dir/*.json'
+         jshint: 'path/to/jshint/div/result-file.xml'
        }
     },
   },

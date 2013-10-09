@@ -26,7 +26,6 @@ module.exports = function (grunt) {
             jshint: parseJshintResults(this.data.results.jshint)
         };
 
-        console.log(options.dir + '/' + options.file);
         grunt.file.write(options.dir + '/' + options.file, JSON.stringify(result));
     });
 

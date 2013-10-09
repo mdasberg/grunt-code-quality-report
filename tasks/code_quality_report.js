@@ -35,18 +35,18 @@ module.exports = function (grunt) {
      * @returns {{junit: {}}}
      */
     function parseJunitResults(fileName) {
-        var junitResults = {junit: {}};
-
+        var results = [];
         xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
             res.testsuites.testsuite.forEach(function (testsuite) {
-                junitResults.junit[testsuite.$.name] = {
+                results.push({
+                    browser: testsuite.$.name,
                     tests: Number(testsuite.$.tests),
                     failures: Number(testsuite.$.failures),
                     time: Number(testsuite.$.time)
-                };
+                });
             });
         });
-        return junitResults.junit;
+        return results;
     }
 
     /**
@@ -58,7 +58,7 @@ module.exports = function (grunt) {
         var collector = new istanbul.Collector();
         var utils = istanbul.utils;
 
-        var coverageResults = {coverage: {}};
+        var results = [];
         var coverageDir = coverage.substring(0, coverage.lastIndexOf("/"));
         grunt.file.expand(coverage).forEach(function (file) {
             var fileName = file.substr(coverageDir.length + 1, file.length);
@@ -66,14 +66,15 @@ module.exports = function (grunt) {
 
             collector.add(JSON.parse(grunt.file.read(file)));
             var summary = utils.summarizeCoverage(collector.getFinalCoverage());
-            coverageResults.coverage[browser] = {
+            results.push({
+                browser: browser,
                 lines: Number(summary.lines.pct),
                 branches: Number(summary.branches.pct),
                 functions: Number(summary.functions.pct),
                 statements: Number(summary.statements.pct)
-            };
+            })
         });
-        return coverageResults.coverage;
+        return results;
     }
 
     /**

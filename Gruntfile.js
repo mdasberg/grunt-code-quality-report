@@ -31,8 +31,8 @@ module.exports = function (grunt) {
         // Configuration to be run (and then tested).
         code_quality_report: {
             options: {
-//                dir: 'test/results',
-//                file: 'result.json'
+                dir: 'test/results',
+                file: 'result.json'
             },
             default: {
                 results: {
@@ -53,7 +53,20 @@ module.exports = function (grunt) {
                     coverage: 'test/fixtures/coverage/*.json',
                     jshint: 'test/fixtures/jshint/jshint.xml'
                 }
+            },
+            missing: {
+                options: {
+                    dir: 'test/missing/results',
+                    file: 'missing-file.json'
+                },
+                results: {
+                    junit: 'test/fixtures/missing.xml',
+                    e2e: 'test/fixtures/missing.xml',
+                    coverage: 'test/fixtures/missing/*.json',
+                    jshint: 'test/fixtures/missing.xml'
+                }
             }
+
         },
 
         // Unit tests.

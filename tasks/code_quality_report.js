@@ -37,16 +37,19 @@ module.exports = function (grunt) {
      */
     function parseJunitResults(fileName) {
         var results = [];
-        xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
-            res.testsuites.testsuite.forEach(function (testsuite) {
-                results.push({
-                    browser: testsuite.$.name,
-                    tests: Number(testsuite.$.tests),
-                    failures: Number(testsuite.$.failures),
-                    time: Number(testsuite.$.time)
+        if (grunt.file.exists(fileName)) {
+            xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
+
+                res.testsuites.testsuite.forEach(function (testsuite) {
+                    results.push({
+                        browser: testsuite.$.name,
+                        tests: Number(testsuite.$.tests),
+                        failures: Number(testsuite.$.failures),
+                        time: Number(testsuite.$.time)
+                    });
                 });
             });
-        });
+        }
         return results;
     }
 
@@ -57,16 +60,18 @@ module.exports = function (grunt) {
      */
     function parseE2eResults(fileName) {
         var results = [];
-        xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
-            res.testsuites.testsuite.forEach(function (testsuite) {
-                results.push({
-                    browser: testsuite.$.name,
-                    tests: Number(testsuite.$.tests),
-                    failures: Number(testsuite.$.failures),
-                    time: Number(testsuite.$.time)
+        if (grunt.file.exists(fileName)) {
+            xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
+                res.testsuites.testsuite.forEach(function (testsuite) {
+                    results.push({
+                        browser: testsuite.$.name,
+                        tests: Number(testsuite.$.tests),
+                        failures: Number(testsuite.$.failures),
+                        time: Number(testsuite.$.time)
+                    });
                 });
             });
-        });
+        }
         return results;
     }
 
@@ -106,14 +111,15 @@ module.exports = function (grunt) {
      */
     function parseJshintResults(fileName) {
         var result = {};
-
-        xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
-            result = {
-                tests: Number(res.testsuite.$.tests),
-                failures: Number(res.testsuite.$.failures),
-                errors: Number(res.testsuite.$.errors)
-            };
-        });
+        if (grunt.file.exists(fileName)) {
+            xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
+                result = {
+                    tests: Number(res.testsuite.$.tests),
+                    failures: Number(res.testsuite.$.failures),
+                    errors: Number(res.testsuite.$.errors)
+                };
+            });
+        }
         return result;
     }
 };

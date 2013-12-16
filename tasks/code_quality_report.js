@@ -113,11 +113,12 @@ module.exports = function (grunt) {
         if (grunt.file.exists(fileName)) {
             var content = grunt.file.read(fileName);
             xml2js.parseString(content, {}, function (err, res) {
+                var consoleStatements = content.match(/(console.*)/g);
                 result = {
                     tests: Number(res.testsuite.$.tests),
                     failures: Number(res.testsuite.$.failures),
                     errors: Number(res.testsuite.$.errors),
-                    consoleStatements: content.match(/(console.*)/g).length
+                    consoleStatements: consoleStatements != null ? consoleStatements.length : 0
                 };
             });
         }

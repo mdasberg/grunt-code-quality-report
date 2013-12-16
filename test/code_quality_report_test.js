@@ -6,7 +6,7 @@ exports.code_quality_report = {
     setUp: function (done) {
         done();
     },
-    example: function (test) {
+    default: function (test) {
         test.expect(1);
 
         var actual = grunt.file.read('result.json');

@@ -9,7 +9,7 @@ exports.code_quality_report = {
     default: function (test) {
         test.expect(1);
 
-        var actual = grunt.file.read('result.json');
+        var actual = grunt.file.read('test/results/result.json');
         var expected = grunt.file.read('test/expected/example.json');
         test.equal(actual, expected, 'should write the result in the default result dir.');
 

@@ -6,4 +6,6 @@ node_modules
 npm-debug.log
 tmp
 result.json
-test/override
+test/override/results
+test/missing/results
+test/results

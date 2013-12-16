@@ -14,7 +14,6 @@ module.exports = function (grunt) {
     var istanbul = require('istanbul');
 
     grunt.registerMultiTask('code_quality_report', 'Grunt code quality reporter', function () {
-
         var options = this.options({
             dir: '.',
             file: 'result.json'
@@ -112,11 +111,13 @@ module.exports = function (grunt) {
     function parseJshintResults(fileName) {
         var result = {};
         if (grunt.file.exists(fileName)) {
-            xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
+            var content = grunt.file.read(fileName);
+            xml2js.parseString(content, {}, function (err, res) {
                 result = {
                     tests: Number(res.testsuite.$.tests),
                     failures: Number(res.testsuite.$.failures),
-                    errors: Number(res.testsuite.$.errors)
+                    errors: Number(res.testsuite.$.errors),
+                    consoleStatements: content.match(/(console.*)/g).length
                 };
             });
         }

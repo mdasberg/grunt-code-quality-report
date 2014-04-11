@@ -20,10 +20,10 @@ module.exports = function (grunt) {
         });
 
         var result = {
-            junit: parseJunitAndE2EResults(this.data.results.junit),
+            junit: parseJunitAndE2EResults(this.data.results.junit.file, this.data.results.junit.showDetails),
             coverage: parseCoverageResults(this.data.results.coverage),
             jshint: parseJshintResults(this.data.results.jshint),
-            e2e: parseJunitAndE2EResults(this.data.results.e2e)
+            e2e: parseJunitAndE2EResults(this.data.results.e2e.file, this.data.results.e2e.showDetails)
         };
 
         var s = JSON.stringify(result);
@@ -36,36 +36,44 @@ module.exports = function (grunt) {
      * @param fileName The filename.
      * @returns {{junit: {}}} or {{E2E: {}}}
      */
-    function parseJunitAndE2EResults(fileName) {
+    function parseJunitAndE2EResults(fileName, showDetails) {
         var results = [];
         if (grunt.file.exists(fileName)) {
             xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
                 res.testsuites.testsuite.forEach(function (testsuite) {
 
                     var failureDetails = [];
-                    testsuite.testcase.forEach(function (testcase) {
-                        var failures = [];
-                        if (testcase.failure !== undefined) {
-                            testcase.failure.forEach(function (failure) {
-                                failures.push({
-                                    cause: failure._
-                                });
-                            });
-                            failureDetails.push({
-                                name: testcase.$.name,
-                                failures: failures
-                            });
-                        }
-                    });
 
-                    results.push({
+                    var result = {
                         browser: testsuite.$.name,
                         tests: Number(testsuite.$.tests),
                         failures: Number(testsuite.$.failures),
                         time: Number(testsuite.$.time),
-                        errors: Number(testsuite.$.errors),
-                        failureDetails: failureDetails
+                        errors: Number(testsuite.$.errors)
+                    };
+
+
+                    testsuite.testcase.forEach(function (testcase) {
+                        var failures = [];
+                        var failure = {};
+                        if (testcase.failure !== undefined) {
+                            if (showDetails) {
+                                testcase.failure.forEach(function (failureCause) {
+                                   failure.cause = failureCause._;
+                                });
+                            }
+                            failure.name = testcase.$.name;
+                            failureDetails.push(failure);
+                        }
                     });
+
+                    // Check if there are failures
+                    if (Number(testsuite.$.failures) > 0) {
+                        result.failureDetails = failureDetails;
+                    }
+
+
+                    results.push(result);
                 });
             });
         }

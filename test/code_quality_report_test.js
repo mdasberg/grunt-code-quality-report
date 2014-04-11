@@ -10,7 +10,7 @@ exports.code_quality_report = {
         test.expect(1);
 
         var actual = grunt.file.read('test/results/result.json');
-        var expected = grunt.file.read('test/expected/example.json');
+        var expected = grunt.file.read('test/expected/default.json');
         test.equal(actual, expected, 'should write the result in the default result dir.');
 
         test.done();
@@ -19,7 +19,16 @@ exports.code_quality_report = {
         test.expect(1);
 
         var actual = grunt.file.read('test/override/results/override-file.json');
-        var expected = grunt.file.read('test/expected/example.json');
+        var expected = grunt.file.read('test/expected/override.json');
+        test.equal(actual, expected, 'should write the result in the override result dir.');
+
+        test.done();
+    },
+    overrideWithDetails: function (test) {
+        test.expect(1);
+
+        var actual = grunt.file.read('test/overrideWithDetails/results/override-file.json');
+        var expected = grunt.file.read('test/expected/overrideWithDetails.json');
         test.equal(actual, expected, 'should write the result in the override result dir.');
 
         test.done();
@@ -28,8 +37,8 @@ exports.code_quality_report = {
         test.expect(1);
 
         var actual = grunt.file.read('test/missing/results/missing-file.json');
-        var expected = grunt.file.read('test/expected/example-missing.json');
-        test.equal(actual, expected, 'should write the result in the override result dir.');
+        var expected = grunt.file.read('test/expected/missing.json');
+        test.equal(actual, expected, 'should write the result in the missing result dir.');
 
         test.done();
     }

@@ -20,60 +20,57 @@ module.exports = function (grunt) {
         });
 
         var result = {
-            junit: parseJunitResults(this.data.results.junit, this.options({dir: '.'})),
+            junit: parseJunitAndE2EResults(this.data.results.junit),
             coverage: parseCoverageResults(this.data.results.coverage),
             jshint: parseJshintResults(this.data.results.jshint),
-            e2e: parseE2eResults(this.data.results.e2e)
+            e2e: parseJunitAndE2EResults(this.data.results.e2e)
         };
 
-        grunt.file.write(options.dir + '/' + options.file, JSON.stringify(result));
+        var s = JSON.stringify(result);
+        s = s.replace(/\\r\\n/g, "\\n"); // replace windows newline characters with \n
+        grunt.file.write(options.dir + '/' + options.file, s);
     });
 
     /**
-     * Parse the junit results.
+     * Parse the junit or E2E results.
      * @param fileName The filename.
-     * @returns {{junit: {}}}
+     * @returns {{junit: {}}} or {{E2E: {}}}
      */
-    function parseJunitResults(fileName) {
+    function parseJunitAndE2EResults(fileName) {
         var results = [];
         if (grunt.file.exists(fileName)) {
             xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
-
                 res.testsuites.testsuite.forEach(function (testsuite) {
+
+                    var failureDetails = [];
+                    testsuite.testcase.forEach(function (testcase) {
+                        var failures = [];
+                        if (testcase.failure !== undefined) {
+                            testcase.failure.forEach(function (failure) {
+                                failures.push({
+                                    cause: failure._
+                                });
+                            });
+                            failureDetails.push({
+                                name: testcase.$.name,
+                                failures: failures
+                            });
+                        }
+                    });
+
                     results.push({
                         browser: testsuite.$.name,
                         tests: Number(testsuite.$.tests),
                         failures: Number(testsuite.$.failures),
-                        time: Number(testsuite.$.time)
+                        time: Number(testsuite.$.time),
+                        errors: Number(testsuite.$.errors),
+                        failureDetails: failureDetails
                     });
                 });
             });
         }
         return results;
     }
-
-    /**
-     * Parse the e2e results.
-     * @param fileName The filename.
-     * @returns {{junit: {}}}
-     */
-    function parseE2eResults(fileName) {
-        var results = [];
-        if (grunt.file.exists(fileName)) {
-            xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
-                res.testsuites.testsuite.forEach(function (testsuite) {
-                    results.push({
-                        browser: testsuite.$.name,
-                        tests: Number(testsuite.$.tests),
-                        failures: Number(testsuite.$.failures),
-                        time: Number(testsuite.$.time)
-                    });
-                });
-            });
-        }
-        return results;
-    }
-
 
     /**
      * Parse the coverage results
@@ -98,7 +95,7 @@ module.exports = function (grunt) {
                 branches: Number(summary.branches.pct),
                 functions: Number(summary.functions.pct),
                 statements: Number(summary.statements.pct)
-            })
+            });
         });
         return results;
     }

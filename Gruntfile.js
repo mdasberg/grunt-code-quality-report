@@ -46,6 +46,20 @@ module.exports = function (grunt) {
                     jshint: 'test/fixtures/jshint/jshint.xml'
                 }
             },
+            defaultWithoutTestCases: {
+                options: {
+                    dir: 'test/defaultWithoutTestCases/results',
+                    file: 'default-file.json'
+                },
+                results: {
+                    junit: {
+                        file: 'test/fixtures/junit/test-results-without-testcases.xml'
+                    },
+                    e2e: {
+                        file: 'test/fixtures/e2e/e2e-without-testcases.xml'
+                    }
+                }
+            },
             override: {
                 options: {
                     dir: 'test/override/results',
@@ -99,8 +113,15 @@ module.exports = function (grunt) {
                     coverage: 'test/fixtures/missing/*.json',
                     jshint: 'test/fixtures/missing.xml'
                 }
+            },
+            undefined: {
+                options: {
+                    dir: 'test/undefined/results',
+                    file: 'undefined-file.json'
+                },
+                results: {
+                }
             }
-
         },
 
         // Unit tests.

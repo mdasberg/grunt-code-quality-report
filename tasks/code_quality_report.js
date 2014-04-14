@@ -19,12 +19,19 @@ module.exports = function (grunt) {
             file: 'result.json'
         });
 
-        var result = {
-            junit: parseJunitAndE2EResults(this.data.results.junit.file, this.data.results.junit.showDetails),
-            coverage: parseCoverageResults(this.data.results.coverage),
-            jshint: parseJshintResults(this.data.results.jshint),
-            e2e: parseJunitAndE2EResults(this.data.results.e2e.file, this.data.results.e2e.showDetails)
-        };
+        var result = {};
+        if(this.data.results.junit !== undefined && this.data.results.junit.file !== undefined) {
+            result.junit =parseJunitAndE2EResults(this.data.results.junit.file, this.data.results.junit.showDetails);
+        }
+        if(this.data.results.coverage !== undefined) {
+            result.coverage = parseCoverageResults(this.data.results.coverage);
+        }
+        if(this.data.results.jshint !== undefined) {
+            result.jshint = parseJshintResults(this.data.results.jshint);
+        }
+        if(this.data.results.e2e !== undefined && this.data.results.e2e.file !== undefined) {
+            result.e2e = parseJunitAndE2EResults(this.data.results.e2e.file, this.data.results.e2e.showDetails);
+        }
 
         var s = JSON.stringify(result);
         s = s.replace(/\\r\\n/g, "\\n"); // replace windows newline characters with \n
@@ -52,20 +59,21 @@ module.exports = function (grunt) {
                         errors: Number(testsuite.$.errors)
                     };
 
-
-                    testsuite.testcase.forEach(function (testcase) {
-                        var failures = [];
-                        var failure = {};
-                        if (testcase.failure !== undefined) {
-                            if (showDetails) {
-                                testcase.failure.forEach(function (failureCause) {
-                                   failure.cause = failureCause._;
-                                });
+                    if(testsuite.testcase !== undefined) {
+                        testsuite.testcase.forEach(function (testcase) {
+                            var failures = [];
+                            var failure = {};
+                            if (testcase.failure !== undefined) {
+                                if (showDetails) {
+                                    testcase.failure.forEach(function (failureCause) {
+                                        failure.cause = failureCause._;
+                                    });
+                                }
+                                failure.name = testcase.$.name;
+                                failureDetails.push(failure);
                             }
-                            failure.name = testcase.$.name;
-                            failureDetails.push(failure);
-                        }
-                    });
+                        });
+                    }
 
                     // Check if there are failures
                     if (Number(testsuite.$.failures) > 0) {

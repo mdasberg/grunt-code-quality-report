@@ -15,6 +15,15 @@ exports.code_quality_report = {
 
         test.done();
     },
+    defaultWithoutTestCases: function (test) {
+        test.expect(1);
+
+        var actual = grunt.file.read('test/defaultWithoutTestCases/results/default-file.json');
+        var expected = grunt.file.read('test/expected/defaultWithoutTestCases.json');
+        test.equal(actual, expected, 'should write the result in the default result dir.');
+
+        test.done();
+    },
     override: function (test) {
         test.expect(1);
 
@@ -38,6 +47,15 @@ exports.code_quality_report = {
 
         var actual = grunt.file.read('test/missing/results/missing-file.json');
         var expected = grunt.file.read('test/expected/missing.json');
+        test.equal(actual, expected, 'should write the result in the missing result dir.');
+
+        test.done();
+    },
+    undefined: function (test) {
+        test.expect(1);
+
+        var actual = grunt.file.read('test/undefined/results/undefined-file.json');
+        var expected = grunt.file.read('test/expected/undefined.json');
         test.equal(actual, expected, 'should write the result in the missing result dir.');
 
         test.done();

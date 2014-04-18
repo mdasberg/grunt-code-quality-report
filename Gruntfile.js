@@ -46,6 +46,20 @@ module.exports = function (grunt) {
                     jshint: 'test/fixtures/jshint/jshint.xml'
                 }
             },
+            defaultWithMultipleTestFiles: {
+                options: {
+                    dir: 'test/defaultWithMultipleTestFiles/results',
+                    file: 'default-file.json'
+                },
+                results: {
+                    junit: {
+                        files: 'test/fixtures/junit/TEST-*.xml'
+                    },
+                    e2e: {
+                        files: 'test/fixtures/e2e/TEST-*.xml'
+                    }
+                }
+            },
             defaultWithoutTestCases: {
                 options: {
                     dir: 'test/defaultWithoutTestCases/results',

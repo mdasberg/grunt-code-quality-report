@@ -15,6 +15,15 @@ exports.code_quality_report = {
 
         test.done();
     },
+    defaultWithMultipleTestFiles: function (test) {
+        test.expect(1);
+
+        var actual = grunt.file.read('test/defaultWithMultipleTestFiles/results/default-file.json');
+        var expected = grunt.file.read('test/expected/defaultWithMultipleTestFiles.json');
+        test.equal(actual, expected, 'should write the result in the missing result dir.');
+
+        test.done();
+    },
     defaultWithoutTestCases: function (test) {
         test.expect(1);
 

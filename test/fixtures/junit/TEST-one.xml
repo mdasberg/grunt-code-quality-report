@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite name="PhantomJS 1.9.1 (Mac OS X)" package="undefined" timestamp="2013-10-08T19:05:48" id="0"
+           hostname="Mischas-MacBook-Pro.local" tests="9" errors="1" failures="5" time="0.009">
+    <properties>
+        <property name="browser.fullName"
+                  value="Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.1 Safari/534.34"/>
+    </properties>
+    <testcase name="should read most recent messages from the server (ng-init)" time="0.036"
+              classname="Chrome 33.0.1750 (Windows 7).inboxController on load"/>
+    <testcase name="should read most recent messages from the server (ng-init)" time="0.005"
+              classname="Chrome 33.0.1750 (Windows 7).inboxController on load"/>
+    <testcase name="should set a bolean to true if there are important unread messages (ng-init)" time="0.004"
+              classname="Chrome 33.0.1750 (Windows 7).inboxController on load"/>
+    <testcase name="it should return value as value" time="0.006"
+              classname="PhantomJS 1.9.1 (Mac OS X).Given the example controller">
+        <failure type="">TypeError: &apos;undefined&apos; is not a function (evaluating &apos;some_function()&apos;)
+            at /Users/xxxx/project/app/js/exampleCtrl.js:6
+            at invoke (/Users/xxxx/project/app/lib/angular/angular.js:3162)
+            at instantiate (/Users/xxxx/project/app/lib/angular/angular.js:3174)
+            at /Users/xxxx/project/app/lib/angular/angular.js:5583
+            at /Users/xxxx/project/test/unit/exampleSpec.js:16
+            at invoke (/Users/xxxx/project/app/lib/angular/angular.js:3162)
+            at workFn (/Users/xxxx/project/app/lib/angular-mocks/angular-mocks.js:1952)
+            at /Users/xxxx/project/app/lib/angular-mocks/angular-mocks.js:1939
+            at /Users/xxxx/project/test/unit/exampleSpec.js:18
+        </failure>
+    </testcase>
+    <testcase name="it should return value as value" time="0.001"
+              classname="PhantomJS 1.9.1 (Mac OS X).Given the example controller">
+        <failure type="">TypeError: &apos;undefined&apos; is not a function (evaluating &apos;some_function()&apos;)
+            at /Users/xxxx/project/app/js/exampleCtrl.js:6
+            at invoke (/Users/xxxx/project/app/lib/angular/angular.js:3162)
+            at instantiate (/Users/xxxx/project/app/lib/angular/angular.js:3174)
+            at /Users/xxxx/project/app/lib/angular/angular.js:5583
+            at /Users/xxxx/project/test/unit/exampleSpec.js:16
+            at invoke (/Users/xxxx/project/app/lib/angular/angular.js:3162)
+            at workFn (/Users/xxxx/project/app/lib/angular-mocks/angular-mocks.js:1952)
+            at /Users/xxxx/project/app/lib/angular-mocks/angular-mocks.js:1939
+            at /Users/xxxx/project/test/unit/exampleSpec.js:18
+        </failure>
+    </testcase>
+    <testcase name="it should return value as value" time="0.001"
+              classname="PhantomJS 1.9.1 (Mac OS X).Given the example controller">
+        <failure type="">TypeError: &apos;undefined&apos; is not a function (evaluating &apos;some_function()&apos;)
+            at /Users/xxxx/project/app/js/exampleCtrl.js:6
+            at invoke (/Users/xxxx/project/app/lib/angular/angular.js:3162)
+            at instantiate (/Users/xxxx/project/app/lib/angular/angular.js:3174)
+            at /Users/xxxx/project/app/lib/angular/angular.js:5583
+            at /Users/xxxx/project/test/unit/exampleSpec.js:16
+            at invoke (/Users/xxxx/project/app/lib/angular/angular.js:3162)
+            at workFn (/Users/xxxx/project/app/lib/angular-mocks/angular-mocks.js:1952)
+            at /Users/xxxx/project/app/lib/angular-mocks/angular-mocks.js:1939
+            at /Users/xxxx/project/test/unit/exampleSpec.js:18
+        </failure>
+        <failure type="">Expected &apos;value3&apos; to be &apos;fail&apos;.
+        </failure>
+    </testcase>
+    <testcase name="it should return value as value" time="0.001"
+              classname="PhantomJS 1.9.1 (Mac OS X).Given the example controller">
+        <failure type="">TypeError: &apos;undefined&apos; is not a function (evaluating &apos;some_function()&apos;)
+            at /Users/xxxx/project/app/js/exampleCtrl.js:6
+            at invoke (/Users/xxxx/project/app/lib/angular/angular.js:3162)
+            at instantiate (/Users/xxxx/project/app/lib/angular/angular.js:3174)
+            at /Users/xxxx/project/app/lib/angular/angular.js:5583
+            at /Users/xxxx/project/test/unit/exampleSpec.js:16
+            at invoke (/Users/xxxx/project/app/lib/angular/angular.js:3162)
+            at workFn (/Users/xxxx/project/app/lib/angular-mocks/angular-mocks.js:1952)
+            at /Users/xxxx/project/app/lib/angular-mocks/angular-mocks.js:1939
+            at /Users/xxxx/project/test/unit/exampleSpec.js:18
+        </failure>
+        <failure type="">Expected &apos;value4&apos; to be &apos;fail&apos;.
+        </failure>
+    </testcase>
+    <testcase name="it should return value as value" time="0"
+              classname="PhantomJS 1.9.1 (Mac OS X).Given the example controller">
+        <failure type="">TypeError: &apos;undefined&apos; is not a function (evaluating &apos;some_function()&apos;)
+            at /Users/xxxx/project/app/js/exampleCtrl.js:6
+            at invoke (/Users/xxxx/project/app/lib/angular/angular.js:3162)
+            at instantiate (/Users/xxxx/project/app/lib/angular/angular.js:3174)
+            at /Users/xxxx/project/app/lib/angular/angular.js:5583
+            at /Users/xxxx/project/test/unit/exampleSpec.js:16
+            at invoke (/Users/xxxx/project/app/lib/angular/angular.js:3162)
+            at workFn (/Users/xxxx/project/app/lib/angular-mocks/angular-mocks.js:1952)
+            at /Users/xxxx/project/app/lib/angular-mocks/angular-mocks.js:1939
+            at /Users/xxxx/project/test/unit/exampleSpec.js:18
+        </failure>
+        <failure type="">Expected undefined to be &apos;value5&apos;.
+        </failure>
+    </testcase>
+    <system-out><![CDATA[
+            ]]></system-out>
+    <system-err/>
+</testsuite>

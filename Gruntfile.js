@@ -37,13 +37,24 @@ module.exports = function (grunt) {
             default: {
                 results: {
                     junit: {
-                        file: 'test/fixtures/junit/test-results.xml'
+                        results: {
+                            file: 'test/fixtures/junit/results/test-results.xml'
+                        },
+                        coverage: {
+                            file: 'test/fixtures/junit/coverage/Chrome 30.0.1599 (Mac OS X 10.8.5)/coverage-final.json'
+                        }
                     },
                     e2e: {
-                        file: 'test/fixtures/e2e/e2e.xml'
+                        results: {
+                            file: 'test/fixtures/e2e/results/e2e.xml'
+                        },
+                        coverage: {
+                            file: 'test/fixtures/e2e/coverage/Chrome 30.0.1599 (Mac OS X 10.8.5)/coverage.json'
+                        }
                     },
-                    coverage: 'test/fixtures/coverage/*.json',
-                    jshint: 'test/fixtures/jshint/jshint.xml'
+                    jshint: {
+                        file: 'test/fixtures/jshint/jshint.xml'
+                    }
                 }
             },
             defaultWithMultipleTestFiles: {
@@ -53,10 +64,20 @@ module.exports = function (grunt) {
                 },
                 results: {
                     junit: {
-                        files: 'test/fixtures/junit/TEST-*.xml'
+                        results: {
+                            dir: 'test/fixtures/junit/results/TEST-*.xml'
+                        },
+                        coverage: {
+                            dir: 'test/fixtures/junit/coverage/**/coverage*.json'
+                        }
                     },
                     e2e: {
-                        files: 'test/fixtures/e2e/TEST-*.xml'
+                        results: {
+                            dir: 'test/fixtures/e2e/results/TEST-*.xml'
+                        },
+                        coverage: {
+                            dir: 'test/fixtures/e2e/coverage/**/coverage*.json'
+                        }
                     }
                 }
             },
@@ -67,10 +88,14 @@ module.exports = function (grunt) {
                 },
                 results: {
                     junit: {
-                        file: 'test/fixtures/junit/test-results-without-testcases.xml'
+                        results: {
+                            file: 'test/fixtures/junit/results/test-results-without-testcases.xml'
+                        }
                     },
                     e2e: {
-                        file: 'test/fixtures/e2e/e2e-without-testcases.xml'
+                        results: {
+                            file: 'test/fixtures/e2e/results/e2e-without-testcases.xml'
+                        }
                     }
                 }
             },
@@ -81,15 +106,26 @@ module.exports = function (grunt) {
                 },
                 results: {
                     junit: {
-                        file: 'test/fixtures/junit/test-results.xml',
-                        showDetails: false
+                        results: {
+                            file: 'test/fixtures/junit/results/test-results.xml',
+                            details: false
+                        },
+                        coverage: {
+                            dir: 'test/fixtures/junit/coverage/**/coverage*.json'
+                        }
                     },
                     e2e: {
-                        file: 'test/fixtures/e2e/e2e.xml',
-                        showDetails: false
+                        results: {
+                            file: 'test/fixtures/e2e/results/e2e.xml',
+                            details: false
+                        },
+                        coverage: {
+                            dir: 'test/fixtures/e2e/coverage/**/coverage*.json'
+                        }
                     },
-                    coverage: 'test/fixtures/coverage/*.json',
-                    jshint: 'test/fixtures/jshint/jshint.xml'
+                    jshint: {
+                        file: 'test/fixtures/jshint/jshint.xml'
+                    }
                 }
             },
             overrideWithDetails: {
@@ -99,15 +135,17 @@ module.exports = function (grunt) {
                 },
                 results: {
                     junit: {
-                        file: 'test/fixtures/junit/test-results.xml',
-                        showDetails: true
+                        results: {
+                            file: 'test/fixtures/junit/results/test-results.xml',
+                            details: true
+                        }
                     },
                     e2e: {
-                        file: 'test/fixtures/e2e/e2e.xml',
-                        showDetails: true
-                    },
-                    coverage: 'test/fixtures/coverage/*.json',
-                    jshint: 'test/fixtures/jshint/jshint.xml'
+                        results: {
+                            file: 'test/fixtures/e2e/results/e2e.xml',
+                            details: true
+                        }
+                    }
                 }
             },
             missing: {
@@ -117,14 +155,21 @@ module.exports = function (grunt) {
                 },
                 results: {
                     junit: {
-                        file: 'test/fixtures/missing.xml',
-                        showDetails: true
+                        results: {
+                            file: 'test/fixtures/missing.xml'
+                        },
+                        coverage: {
+                            dir: 'test/fixtures/junit/coverage/**/missing*.json'
+                        }
                     },
                     e2e: {
-                        file: 'test/fixtures/missing.xml',
-                        showDetails: true
+                        results: {
+                            file: 'test/fixtures/missing.xml'
+                        },
+                        coverage: {
+                            dir: 'test/fixtures/e2e/coverage/**/missing*.json'
+                        }
                     },
-                    coverage: 'test/fixtures/missing/*.json',
                     jshint: 'test/fixtures/missing.xml'
                 }
             },

@@ -1,1 +1,1 @@
-{"junit":[{"browser":"PhantomJS 1.9.1 (Mac OS X)","tests":0,"failures":0,"time":0.009,"errors":1}],"e2e":[{"browser":"PhantomJS 1.9.1 (Mac OS X)","tests":0,"failures":0,"time":0.009,"errors":1}]}
+{"junit":{"tests":[{"browser":"PhantomJS 1.9.1 (Mac OS X)","tests":0,"failures":0,"errors":1,"time":0.009}]},"e2e":{"tests":[{"browser":"PhantomJS 1.9.1 (Mac OS X)","tests":0,"failures":0,"errors":1,"time":0.009}]}}

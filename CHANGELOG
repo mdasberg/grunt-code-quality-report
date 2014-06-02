@@ -1,0 +1,5 @@
+v0.1.8:
+  date: 2014-06-02
+  changes:
+    - Added support for e2e coverage.
+    - Added directory support for test results and coverage results

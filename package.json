@@ -1,14 +1,16 @@
 {
     "name": "grunt-code-quality-report",
     "description": "Grunt code quality reporter",
-    "version": "0.1.4",
+    "version": "0.1.7",
     "homepage": "https://github.com/mdasberg/grunt-code-quality-report",
     "author": {
         "name": "Mischa Dasberg",
         "email": "mischa@dasberg.nl"
     },
     "contributors": [
-        "Remco Vlierman <rcvlierman@gmail.com>"
+        "Remco Vlierman <rcvlierman@gmail.com>",
+        "Maarten van Schelven <maarten.schelven@gmail.com>"
+
     ],
     "repository": {
         "type": "git",
@@ -31,7 +33,7 @@
         "test": "grunt test"
     },
     "dependencies": {
-        "xml2js": "~0.2.8",
+        "xml2js": "~0.4.2",
         "istanbul": "~0.1.44"
     },
     "devDependencies": {

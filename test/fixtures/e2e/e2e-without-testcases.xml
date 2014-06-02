@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<testsuites>
+    <testsuite name="PhantomJS 1.9.1 (Mac OS X)" package="e2e" timestamp="2013-10-08T19:05:48" id="0" hostname="Mischas-MacBook-Pro.local" tests="0" errors="1" failures="0" time="0.009">
+        <properties>
+            <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.1 Safari/534.34"/>
+        </properties>
+        <system-out><![CDATA[Something went wrong
+                ]]></system-out>
+        <system-err/>
+    </testsuite>
+</testsuites>

@@ -31,7 +31,9 @@ grunt.initConfig({
     },
     your_target: {
        results: {
-         junit: 'path/to/junit/dir/results-file.xml'
+         junit: {
+            file: 'path/to/junit/dir/results-file.xml'
+         }
          coverage: 'path/to/coverage/dir/*.json'
          jshint: 'path/to/jshint/div/result-file.xml'
        }
@@ -65,7 +67,9 @@ grunt.initConfig({
     options: {},
     your_target: {
        results: {
-         junit: 'path/to/junit/dir/results-file.xml'
+         junit: {
+            file: 'path/to/junit/dir/results-file.xml'
+         }
          coverage: 'path/to/coverage/dir/*.json'
          jshint: 'path/to/jshint/div/result-file.xml'
        }
@@ -86,7 +90,10 @@ grunt.initConfig({
     },
     your_target: {
        results: {
-         junit: 'path/to/junit/dir/results-file.xml'
+         junit: {
+            file: 'path/to/junit/dir/results-file.xml',
+            showDetails: true
+         }
          coverage: 'path/to/coverage/dir/*.json'
          jshint: 'path/to/jshint/div/result-file.xml'
        }
@@ -96,7 +103,7 @@ grunt.initConfig({
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+In line of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
 _(Nothing yet)_

@@ -19,33 +19,83 @@ module.exports = function (grunt) {
             file: 'result.json'
         });
 
-        var result = {
-            junit: parseJunitResults(this.data.results.junit, this.options({dir: '.'})),
-            coverage: parseCoverageResults(this.data.results.coverage),
-            jshint: parseJshintResults(this.data.results.jshint),
-            e2e: parseE2eResults(this.data.results.e2e)
-        };
+        var result = {};
+        if (this.data.results.junit !== undefined) {
+            if (this.data.results.junit.file !== undefined) {
+                result.junit = parseJunitAndE2EResults(this.data.results.junit.file, this.data.results.junit.showDetails);
+            } else if (this.data.results.junit.files !== undefined) {
+                var outputDir = this.data.results.junit.files.substring(0, this.data.results.junit.files.lastIndexOf("/"));
+                var fileName = outputDir + '/junit-merged.xml';
+                mergeTestResultFiles(this.data.results.junit.files, fileName);
+                result.junit = parseJunitAndE2EResults(fileName, this.data.results.junit.showDetails);
+            }
+        }
+        if (this.data.results.coverage !== undefined) {
+            result.coverage = parseCoverageResults(this.data.results.coverage);
+        }
+        if (this.data.results.jshint !== undefined) {
+            result.jshint = parseJshintResults(this.data.results.jshint);
+        }
+        if (this.data.results.e2e !== undefined) {
+            if (this.data.results.e2e.file !== undefined) {
+                result.e2e = parseJunitAndE2EResults(this.data.results.e2e.file, this.data.results.e2e.showDetails);
+            } else if (this.data.results.e2e.files !== undefined) {
+                var outputDir = this.data.results.e2e.files.substring(0, this.data.results.e2e.files.lastIndexOf("/"));
+                var fileName = outputDir + '/e2e-merged.xml';
+                mergeTestResultFiles(this.data.results.e2e.files, fileName);
+                result.e2e = parseJunitAndE2EResults(fileName, this.data.results.e2e.showDetails);
+            }
+        }
 
-        grunt.file.write(options.dir + '/' + options.file, JSON.stringify(result));
+        var s = JSON.stringify(result);
+        s = s.replace(/\\r\\n/g, "\\n"); // replace windows newline characters with \n
+        grunt.file.write(options.dir + '/' + options.file, s);
     });
 
     /**
-     * Parse the junit results.
+     * Parse the junit or E2E results.
      * @param fileName The filename.
-     * @returns {{junit: {}}}
+     * @returns {{junit: {}}} or {{E2E: {}}}
      */
-    function parseJunitResults(fileName) {
+    function parseJunitAndE2EResults(fileName, showDetails) {
         var results = [];
         if (grunt.file.exists(fileName)) {
             xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
-
                 res.testsuites.testsuite.forEach(function (testsuite) {
-                    results.push({
+
+                    var failureDetails = [];
+
+                    var result = {
                         browser: testsuite.$.name,
                         tests: Number(testsuite.$.tests),
                         failures: Number(testsuite.$.failures),
-                        time: Number(testsuite.$.time)
-                    });
+                        time: Number(testsuite.$.time),
+                        errors: Number(testsuite.$.errors)
+                    };
+
+                    if (testsuite.testcase !== undefined) {
+                        testsuite.testcase.forEach(function (testcase) {
+                            var failures = [];
+                            var failure = {};
+                            if (testcase.failure !== undefined) {
+                                if (showDetails) {
+                                    testcase.failure.forEach(function (failureCause) {
+                                        failure.cause = failureCause._;
+                                    });
+                                }
+                                failure.name = testcase.$.name;
+                                failureDetails.push(failure);
+                            }
+                        });
+                    }
+
+                    // Check if there are failures
+                    if (Number(testsuite.$.failures) > 0) {
+                        result.failureDetails = failureDetails;
+                    }
+
+
+                    results.push(result);
                 });
             });
         }
@@ -53,25 +103,40 @@ module.exports = function (grunt) {
     }
 
     /**
-     * Parse the e2e results.
-     * @param fileName The filename.
-     * @returns {{junit: {}}}
+     * Merge the test result files.
+     * @param sources The sources.
      */
-    function parseE2eResults(fileName) {
-        var results = [];
-        if (grunt.file.exists(fileName)) {
-            xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
-                res.testsuites.testsuite.forEach(function (testsuite) {
-                    results.push({
-                        browser: testsuite.$.name,
-                        tests: Number(testsuite.$.tests),
-                        failures: Number(testsuite.$.failures),
-                        time: Number(testsuite.$.time)
-                    });
-                });
-            });
+    function mergeTestResultFiles(sources, fileName) {
+        var mergedAndUpdatedContent = '<?xml version="1.0"?><testsuites>';
+        grunt.file.expand(sources).forEach(function (file) {
+            var content = grunt.file.read(file);
+            content = content.replace(/\<\?xml.+\?\>/g, '');
+            content = content.replace(/\<testsuites>/g, '');
+            content = content.replace(/\<\/testsuites>/g, '');
+            mergedAndUpdatedContent = mergedAndUpdatedContent.concat(content);
+        });
+
+        mergedAndUpdatedContent = mergedAndUpdatedContent.concat('</testsuites>');
+        grunt.file.write(fileName, mergedAndUpdatedContent);
+    }
+
+    /**
+     * Updates the given junit file content and returns it.
+     * @param source The source.
+     * @returns {*}
+     */
+    function getUpdatedJunitFileContent(source) {
+        if (grunt.file.exists(source.testReport)) {
+            var content = grunt.file.read(source.testReport);
+            content = content.replace(/\<\?xml.+\?\>/g, '');
+            content = content.replace(/\<testsuites>/g, '');
+            content = content.replace(/\<\/testsuites>/g, '');
+
+            return content;
+        } else {
+            grunt.log.error(source.testReport + " does not exist.");
+            return null;
         }
-        return results;
     }
 
 
@@ -98,7 +163,7 @@ module.exports = function (grunt) {
                 branches: Number(summary.branches.pct),
                 functions: Number(summary.functions.pct),
                 statements: Number(summary.statements.pct)
-            })
+            });
         });
         return results;
     }

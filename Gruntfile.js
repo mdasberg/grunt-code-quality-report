@@ -36,10 +36,42 @@ module.exports = function (grunt) {
             },
             default: {
                 results: {
-                    junit: 'test/fixtures/junit/test-results.xml',
-                    e2e: 'test/fixtures/e2e/e2e.xml',
+                    junit: {
+                        file: 'test/fixtures/junit/test-results.xml'
+                    },
+                    e2e: {
+                        file: 'test/fixtures/e2e/e2e.xml'
+                    },
                     coverage: 'test/fixtures/coverage/*.json',
                     jshint: 'test/fixtures/jshint/jshint.xml'
+                }
+            },
+            defaultWithMultipleTestFiles: {
+                options: {
+                    dir: 'test/defaultWithMultipleTestFiles/results',
+                    file: 'default-file.json'
+                },
+                results: {
+                    junit: {
+                        files: 'test/fixtures/junit/TEST-*.xml'
+                    },
+                    e2e: {
+                        files: 'test/fixtures/e2e/TEST-*.xml'
+                    }
+                }
+            },
+            defaultWithoutTestCases: {
+                options: {
+                    dir: 'test/defaultWithoutTestCases/results',
+                    file: 'default-file.json'
+                },
+                results: {
+                    junit: {
+                        file: 'test/fixtures/junit/test-results-without-testcases.xml'
+                    },
+                    e2e: {
+                        file: 'test/fixtures/e2e/e2e-without-testcases.xml'
+                    }
                 }
             },
             override: {
@@ -48,8 +80,32 @@ module.exports = function (grunt) {
                     file: 'override-file.json'
                 },
                 results: {
-                    junit: 'test/fixtures/junit/test-results.xml',
-                    e2e: 'test/fixtures/e2e/e2e.xml',
+                    junit: {
+                        file: 'test/fixtures/junit/test-results.xml',
+                        showDetails: false
+                    },
+                    e2e: {
+                        file: 'test/fixtures/e2e/e2e.xml',
+                        showDetails: false
+                    },
+                    coverage: 'test/fixtures/coverage/*.json',
+                    jshint: 'test/fixtures/jshint/jshint.xml'
+                }
+            },
+            overrideWithDetails: {
+                options: {
+                    dir: 'test/overrideWithDetails/results',
+                    file: 'override-file.json'
+                },
+                results: {
+                    junit: {
+                        file: 'test/fixtures/junit/test-results.xml',
+                        showDetails: true
+                    },
+                    e2e: {
+                        file: 'test/fixtures/e2e/e2e.xml',
+                        showDetails: true
+                    },
                     coverage: 'test/fixtures/coverage/*.json',
                     jshint: 'test/fixtures/jshint/jshint.xml'
                 }
@@ -60,13 +116,26 @@ module.exports = function (grunt) {
                     file: 'missing-file.json'
                 },
                 results: {
-                    junit: 'test/fixtures/missing.xml',
-                    e2e: 'test/fixtures/missing.xml',
+                    junit: {
+                        file: 'test/fixtures/missing.xml',
+                        showDetails: true
+                    },
+                    e2e: {
+                        file: 'test/fixtures/missing.xml',
+                        showDetails: true
+                    },
                     coverage: 'test/fixtures/missing/*.json',
                     jshint: 'test/fixtures/missing.xml'
                 }
+            },
+            undefined: {
+                options: {
+                    dir: 'test/undefined/results',
+                    file: 'undefined-file.json'
+                },
+                results: {
+                }
             }
-
         },
 
         // Unit tests.

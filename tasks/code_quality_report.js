@@ -71,6 +71,7 @@ module.exports = function (grunt) {
         if (jshint !== undefined && jshint.file !== undefined) {
             result.jshint = parseJshintResults(jshint.file);
         } else {
+            grunt.log.subhead('Not applicable yet');
             grunt.log('jsHint resultfile not found')
         }
 

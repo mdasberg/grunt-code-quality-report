@@ -29,16 +29,16 @@ grunt.initConfig({
        dir: 'test/results',
        file: 'result.json'
     },
-    your_target: {
-       results: {
-         junit: {
-            file: 'path/to/junit/dir/results-file.xml'
-         }
-         coverage: 'path/to/coverage/dir/*.json'
-         jshint: 'path/to/jshint/div/result-file.xml'
-       }
-    },
-  },
+    results: {
+     junit: {
+        file: 'path/to/junit/dir/results-file.xml',
+     }
+     coverage: 'path/to/coverage/dir/*.json',
+     jshint: {
+        file:'path/to/jshint/div/result-file.xml'
+     }
+  }
+}
 })
 ```
 

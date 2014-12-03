@@ -26,6 +26,7 @@ module.exports = function (grunt) {
         var result = {};
 
         if (junit !== undefined) {
+            grunt.log.subhead(junit.file)
             result.junit = {};
             if (junit.results !== undefined) {
                 var fileName;

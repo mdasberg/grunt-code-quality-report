@@ -179,11 +179,18 @@ module.exports = function (grunt) {
                 var content = grunt.file.read(fileName);
                 xml2js.parseString(content, {}, function (err, res) {
                     var consoleStatements = content.match(/(console.*)/g);
+                    var details = {};
+                    res.testsuite.testcase.forEach(function(key){
+                        var filename = key.$.name.substring(key.$.name.search(/[^\/]+$/g));
+                        details[filename]= key.failure[0]._.replace( /\n/g, "###" ).split( "###" )
+                    });
                     result = {
+
                         tests: Number(res.testsuite.$.tests),
                         failures: Number(res.testsuite.$.failures),
                         errors: Number(res.testsuite.$.errors),
-                        consoleStatements: consoleStatements != null ? consoleStatements.length : 0
+                        consoleStatements: consoleStatements != null ? consoleStatements.length : 0,
+                        details: details ? details : 0
                     };
                 });
             }

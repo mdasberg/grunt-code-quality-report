@@ -12,6 +12,7 @@ module.exports = function (grunt) {
 
     var xml2js = require('xml2js');
     var istanbul = require('istanbul');
+    var path = require('path');
 
     grunt.registerMultiTask('code_quality_report', 'Grunt code quality reporter', function () {
         var options = this.options({
@@ -25,52 +26,11 @@ module.exports = function (grunt) {
         var e2e = this.data.results.e2e;
         var result = {};
 
-        if (junit !== undefined) {
-            grunt.log.subhead(junit.file)
-            result.junit = {};
-            if (junit.results !== undefined) {
-                var fileName;
-                if (junit.results.file !== undefined) {
-                    fileName = junit.results.file;
-                } else if (junit.results.dir !== undefined) {
-                    fileName = mergeTestResults(junit.results.dir);
-                }
-                if (fileName !== undefined) {
-                    result.junit.tests = parseTestResults(fileName, junit.results.details);
-                }
-            }
-            if (junit.coverage !== undefined) {
-                if (junit.coverage.file !== undefined) {
-                    result.junit.coverage = parseCoverageResults(junit.coverage.file);
-                } else if (junit.coverage.dir !== undefined) {
-                    result.junit.coverage = parseCoverageResults(junit.coverage.dir);
-                }
-            }
-        }
+        processTestData(this.data.results, 'junit');
+        processTestData(this.data.results, 'e2e');
 
-        if (e2e !== undefined) {
-            result.e2e = {};
-            if (e2e.results !== undefined) {
-                var fileName;
-                if (e2e.results.file !== undefined) {
-                    fileName = e2e.results.file;
-                } else if (e2e.results.dir !== undefined) {
-                    fileName = mergeTestResults(e2e.results.dir);
-                }
-                if (fileName !== undefined) {
-                    result.e2e.tests = parseTestResults(fileName, e2e.results.details);
-                }
-            }
-            if (e2e.coverage !== undefined) {
-                if (e2e.coverage.file !== undefined) {
-                    result.e2e.coverage = parseCoverageResults(e2e.coverage.file);
-                } else if (e2e.coverage.dir !== undefined) {
-                    result.e2e.coverage = parseCoverageResults(e2e.coverage.dir);
-                }
-            }
-        }
         if (jshint !== undefined && jshint.file !== undefined) {
-            result.jshint = parseJshintResults(jshint.file);
+            result.jshint = parseJshintResults(jshint.file, jshint.details);
         } else {
             grunt.log.subhead('JsHint section undefined or file section missing');
         }
@@ -78,6 +38,38 @@ module.exports = function (grunt) {
         var s = JSON.stringify(result);
         s = s.replace(/\\r\\n/g, "\\n"); // replace windows newline characters with \n
         grunt.file.write(options.dir + '/' + options.file, s);
+
+        /**
+         * Parse the test data for the given type.
+         * @param data The data.
+         * @param type The type.
+         */
+        function processTestData(data, type) {
+            var test = data[type];
+            if (test !== undefined) {
+                grunt.log.subhead('Processing ' + type + ' information');
+                result[type] = {};
+                if (test.results !== undefined) {
+                    var fileName;
+                    if (test.results.file !== undefined) {
+                        fileName = test.results.file;
+                    } else if (test.results.dir !== undefined) {
+                        fileName = mergeTestResults(test.results.dir);
+                    }
+                    if (fileName !== undefined) {
+                        result[type].tests = parseTestResults(fileName, test.results.details);
+                    }
+                }
+                if (test.coverage !== undefined) {
+                    if (test.coverage.file !== undefined) {
+                        result[type].coverage = parseCoverageResults(test.coverage.file);
+                    } else if (junit.coverage.dir !== undefined) {
+                        result[type].coverage = parseCoverageResults(test.coverage.dir);
+                    }
+                }
+            }
+
+        }
 
         /**
          * Merge the test results and writes it in the tmp dir.
@@ -102,7 +94,7 @@ module.exports = function (grunt) {
          * @param fileName The filename.
          * @returns parsedResults The parsed results
          */
-        function parseTestResults(fileName, details) {
+        function parseTestResults(fileName, showDetails) {
             var results = [];
             if (grunt.file.exists(fileName)) {
                 xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
@@ -122,7 +114,7 @@ module.exports = function (grunt) {
                             testsuite.testcase.forEach(function (testcase) {
                                 var failure = {};
                                 if (testcase.failure !== undefined) {
-                                    if (details) {
+                                    if (showDetails) {
                                         testcase.failure.forEach(function (failureCause) {
                                             failure.cause = failureCause._;
                                         });
@@ -155,7 +147,7 @@ module.exports = function (grunt) {
 
             var results = [];
             grunt.file.expand({filter: 'isFile'}, src).forEach(function (file) {
-                var browser = file.substring(0, file.lastIndexOf("/"));
+                var browser = path.dirname(file).substring(path.dirname(file).lastIndexOf("/")+1)
                 collector.add(JSON.parse(grunt.file.read(file)));
                 var summary = utils.summarizeCoverage(collector.getFinalCoverage());
                 results.push({
@@ -174,28 +166,36 @@ module.exports = function (grunt) {
          * @param fileName The filename.
          * @returns {{junit: {}}}
          */
-        function parseJshintResults(fileName) {
+        function parseJshintResults(fileName, showDetails) {
             var result = {};
             if (grunt.file.exists(fileName)) {
                 var content = grunt.file.read(fileName);
                 xml2js.parseString(content, {}, function (err, res) {
                     var consoleStatements = content.match(/(console.*)/g);
-                    var details = {};
-                    res.testsuite.testcase.forEach(function(key){
-                        var filename = key.$.name.substring(key.$.name.search(/[^\/]+$/g));
-                        details[filename]= key.failure[0]._.replace( /\n/g, "###" ).split( "###" )
-                    });
                     result = {
-
                         tests: Number(res.testsuite.$.tests),
                         failures: Number(res.testsuite.$.failures),
                         errors: Number(res.testsuite.$.errors),
-                        consoleStatements: consoleStatements != null ? consoleStatements.length : 0,
-                        details: details ? details : 0
+                        consoleStatements: consoleStatements != null ? consoleStatements.length : 0
                     };
+
+                    if (showDetails) {
+                        var details = {};
+                        res.testsuite.testcase.forEach(function (key) {
+                            var filename = key.$.name.substring(key.$.name.search(/[^\/]+$/g));
+                            console.log(key.failure[0]._.replace(/\n/g, "###").split("###"));
+
+                            var failures = key.failure[0]._.replace(/\n/g, "###").split("###");
+                            failures.shift();
+                            failures.pop();
+                            details[filename] = failures;
+                        });
+                        result.failureDetails = details;
+                    }
                 });
             }
             return result;
         }
     });
 };
+

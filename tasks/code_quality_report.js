@@ -183,8 +183,6 @@ module.exports = function (grunt) {
                         var details = {};
                         res.testsuite.testcase.forEach(function (key) {
                             var filename = key.$.name.substring(key.$.name.search(/[^\/]+$/g));
-                            console.log(key.failure[0]._.replace(/\n/g, "###").split("###"));
-
                             var failures = key.failure[0]._.replace(/\n/g, "###").split("###");
                             failures.shift();
                             failures.pop();

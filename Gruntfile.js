@@ -31,7 +31,7 @@ module.exports = function (grunt) {
         // Configuration to be run (and then tested).
         code_quality_report: {
             options: {
-                dir: 'test/results',
+                dir: '.tmp/results',
                 file: 'result.json'
             },
             default: {
@@ -56,10 +56,11 @@ module.exports = function (grunt) {
                         file: 'test/fixtures/jshint/jshint.xml'
                     }
                 }
-            },
+            }
+            ,
             defaultWithMultipleTestFiles: {
                 options: {
-                    dir: 'test/defaultWithMultipleTestFiles/results',
+                    dir: '.tmp/defaultWithMultipleTestFiles/results',
                     file: 'default-file.json'
                 },
                 results: {
@@ -83,7 +84,7 @@ module.exports = function (grunt) {
             },
             defaultWithoutTestCases: {
                 options: {
-                    dir: 'test/defaultWithoutTestCases/results',
+                    dir: '.tmp/defaultWithoutTestCases/results',
                     file: 'default-file.json'
                 },
                 results: {
@@ -101,7 +102,7 @@ module.exports = function (grunt) {
             },
             override: {
                 options: {
-                    dir: 'test/override/results',
+                    dir: '.tmp/override/results',
                     file: 'override-file.json'
                 },
                 results: {
@@ -124,13 +125,14 @@ module.exports = function (grunt) {
                         }
                     },
                     jshint: {
-                        file: 'test/fixtures/jshint/jshint.xml'
+                        file: 'test/fixtures/jshint/jshint.xml',
+                        details: false
                     }
                 }
             },
             overrideWithDetails: {
                 options: {
-                    dir: 'test/overrideWithDetails/results',
+                    dir: '.tmp/overrideWithDetails/results',
                     file: 'override-file.json'
                 },
                 results: {
@@ -145,12 +147,16 @@ module.exports = function (grunt) {
                             file: 'test/fixtures/e2e/results/e2e.xml',
                             details: true
                         }
+                    },
+                    jshint: {
+                        file: 'test/fixtures/jshint/jshint.xml',
+                        details: true
                     }
                 }
             },
             missing: {
                 options: {
-                    dir: 'test/missing/results',
+                    dir: '.tmp/missing/results',
                     file: 'missing-file.json'
                 },
                 results: {
@@ -175,7 +181,7 @@ module.exports = function (grunt) {
             },
             undefined: {
                 options: {
-                    dir: 'test/undefined/results',
+                    dir: '.tmp/undefined/results',
                     file: 'undefined-file.json'
                 },
                 results: {

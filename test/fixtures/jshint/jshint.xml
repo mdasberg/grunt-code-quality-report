@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <testsuite name="jshint" tests="1" failures="4" errors="0">
 	<testcase name="example/app/scripts/exampleCtrl.js">
-		<failure message="5 JSHint Failures">
+		<failure message="4 JSHint Failures">
 1. line 9, char 0: Identifier &apos;some_function&apos; is not in camel case.
 2. line 11, char 6: &apos;console&apos; is not defined.
 3. line 11, char 23: &apos;some_function&apos; was used before it was defined.

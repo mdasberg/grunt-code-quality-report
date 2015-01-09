@@ -25,25 +25,35 @@ In your project's Gruntfile, add a section named `code_quality_report` to the da
 ```js
 grunt.initConfig({
   code_quality_report: {
-    options: {
-       dir: 'test/results',
-       file: 'result.json'
-    },
-    results: {
-     junit: {
-        results: {
-            file: 'test/test-results.xml'
-        },
-        coverage: {
-            file: 'test/coverage.json'
-        }
+     options: {
+        dir: 'test/results',
+        file: 'result.json'
      },
-
-     jshint: {
-        file:'path/to/jshint/div/result-file.xml'
+     your_target: {
+        junit: {
+           results: {
+              file: 'test/test-results.xml',
+              details: false/true
+           },
+           coverage: {
+              file: 'test/coverage.json'
+           }
+        },
+        e2e: {
+           results: {
+              file: 'test/e2e.xml',
+              details: false/true
+           },
+           coverage: {
+              file: 'test/coverage.json'
+           }
+        },
+        jshint: {
+           file:'path/to/jshint/div/result-file.xml',
+           details: false/true
+        }
      }
   }
-}
 })
 ```
 
@@ -69,41 +79,68 @@ In this example, the default options are used for writing the result.
 ```js
 grunt.initConfig({
   code_quality_report: {
-    options: {},
-    your_target: {
-       results: {
-         junit: {
-            file: 'path/to/junit/dir/results-file.xml'
-         }
-         coverage: 'path/to/coverage/dir/*.json'
-         jshint: 'path/to/jshint/div/result-file.xml'
-       }
-    },
-  },
+     options: {},
+     your_target: {
+        junit: {
+           results: {
+              file: 'test/test-results.xml'
+           },
+           coverage: {
+              file: 'test/coverage.json'
+           }
+        },
+        e2e: {
+           results: {
+              file: 'test/e2e.xml'
+           },
+           coverage: {
+              file: 'test/coverage.json'
+           }
+        },
+        jshint: {
+           file:'path/to/jshint/div/result-file.xml'
+        }
+     }
+  }
 })
 ```
 
-#### Override Options
+#### Custom Options
 In this example, custom options are used to for writing the result.
 
 ```js
 grunt.initConfig({
   code_quality_report: {
-    options: {
-       dir: 'test/results',
-       file: 'result.json'
-    },
-    your_target: {
-       results: {
-         junit: {
-            file: 'path/to/junit/dir/results-file.xml',
-            showDetails: true
-         }
-         coverage: 'path/to/coverage/dir/*.json'
-         jshint: 'path/to/jshint/div/result-file.xml'
-       }
-    },
-  },
+     options: {
+        dir: 'test/results',
+        file: 'result.json'
+     },
+     your_target: {
+        junit: {
+           results: {
+              file: 'test/test-results.xml',
+              details: false/true
+           },
+           coverage: {
+              dir: 'test/coverage*.json',
+           }
+        },
+        e2e: {
+           results: {
+              file: 'test/e2e.xml',
+              details: false/true
+           },
+           coverage: {
+              dir: 'test/coverage*.json',
+              details: false/true
+           }
+        },
+        jshint: {
+           file:'path/to/jshint/div/result-file.xml',
+           details: false/true
+        }
+     }
+  }
 })
 ```
 

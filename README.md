@@ -131,8 +131,7 @@ grunt.initConfig({
               details: false/true
            },
            coverage: {
-              dir: 'test/coverage*.json',
-              details: false/true
+              dir: 'test/coverage*.json'
            }
         },
         jshint: {

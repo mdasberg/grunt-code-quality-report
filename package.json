@@ -1,7 +1,7 @@
 {
     "name": "grunt-code-quality-report",
     "description": "Grunt code quality reporter",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "homepage": "https://github.com/mdasberg/grunt-code-quality-report",
     "author": {
         "name": "Mischa Dasberg",

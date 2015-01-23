@@ -1,3 +1,8 @@
+v0.1.12:
+  date: 2015-01-23
+  changes:
+  - Fixed detail reporting for jshint if there are no failures 
+  - Coverage now reports 0 (zero) percent if there are no tests
 v0.1.11:
   date: 2015-01-23
   changes:

@@ -54,10 +54,12 @@ module.exports = function (grunt) {
                     if (test.results.file !== undefined) {
                         fileName = test.results.file;
                     } else if (test.results.dir !== undefined) {
-                        fileName = mergeTestResults(test.results.dir);
+                        fileName = mergeTestResults(test.results.dir, type);
                     }
                     if (fileName !== undefined) {
                         result[type].tests = parseTestResults(fileName, test.results.details);
+                    } else {
+                        result[type].tests = [];
                     }
                 }
                 if (test.coverage !== undefined) {
@@ -65,6 +67,8 @@ module.exports = function (grunt) {
                         result[type].coverage = parseCoverageResults(test.coverage.file);
                     } else if (junit.coverage.dir !== undefined) {
                         result[type].coverage = parseCoverageResults(test.coverage.dir);
+                    } else {
+                        result[type].coverage = []
                     }
                 }
             }
@@ -77,8 +81,12 @@ module.exports = function (grunt) {
          * @param name The name that is used when writing to disk.
          */
         function mergeTestResults(src, name) {
+            //if(typeof name === 'undefined') {
+            //    return undefined;
+            //}
+
             var result = '<?xml version="1.0"?><testsuites>';
-            grunt.file.expand({ filter: 'isFile'}, src).forEach(function (file) {
+            grunt.file.expand({filter: 'isFile'}, src).forEach(function (file) {
                 var content = grunt.file.read(file);
                 var matches = /<testsuite [\s\S]*>[\s\S]*<\/testsuite>/g.exec(content);
                 result = result.concat(matches);
@@ -98,7 +106,8 @@ module.exports = function (grunt) {
             var results = [];
             if (grunt.file.exists(fileName)) {
                 xml2js.parseString(grunt.file.read(fileName), {}, function (err, res) {
-                    res.testsuites.testsuite.forEach(function (testsuite) {
+                    var suites = (typeof res.testsuites === 'object') ? res.testsuites.testsuite : [];
+                    suites.forEach(function (testsuite) {
 
                         var failureDetails = [];
 

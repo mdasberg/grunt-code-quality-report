@@ -1,5 +1,13 @@
+v0.1.11:
+  date: 2015-01-23
+  changes:
+    - Added checks for missing files/dir 
+v0.1.10: 
+  date: 2015-01-09
+  changes: 
+    - Removed logging statements
 v0.1.9:
-  date: 2014-06-02
+  date: 2015-01-09
   changes:
     - Code cleanup
     - Fixed browser name for coverage

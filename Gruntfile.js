@@ -25,7 +25,7 @@ module.exports = function (grunt) {
 
         // Before generating any new files, remove any previously-created files.
         clean: {
-            tests: ['tmp']
+            tests: ['.tmp']
         },
 
         // Configuration to be run (and then tested).
@@ -177,6 +177,31 @@ module.exports = function (grunt) {
                         }
                     },
                     jshint: 'test/fixtures/missing.xml'
+                }
+            },
+            missingFiles: {
+                options: {
+                    dir: '.tmp/does/not/exist',
+                    file: 'non-existing-file.json'
+                },
+                results: {
+                    junit: {
+                        results: {
+                            file: 'non/existing/results.xml'
+                        },
+                        coverage: {
+                            file: 'non/existing/results.json'
+                        }
+                    },
+                    e2e: {
+                        results: {
+                            dir: 'non/existing/directory/*.xml'
+                        },
+                        coverage: {
+                            dir: 'non/existing/directory/*.json'
+                        }
+                    },
+                    jshint: 'non/existing/results.xml'
                 }
             },
             undefined: {

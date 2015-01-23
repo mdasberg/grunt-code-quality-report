@@ -176,13 +176,15 @@ module.exports = function (grunt) {
                             dir: 'test/fixtures/e2e/coverage/**/missing*.json'
                         }
                     },
-                    jshint: 'test/fixtures/missing.xml'
+                    jshint: {
+                        file: 'test/fixtures/missing.xml'
+                    }
                 }
             },
             missingFiles: {
                 options: {
-                    dir: '.tmp/does/not/exist',
-                    file: 'non-existing-file.json'
+                    dir: '.tmp/missing-files/',
+                    file: 'missing-files.json'
                 },
                 results: {
                     junit: {
@@ -201,7 +203,9 @@ module.exports = function (grunt) {
                             dir: 'non/existing/directory/*.json'
                         }
                     },
-                    jshint: 'non/existing/results.xml'
+                    jshint: {
+                        file: 'non/existing/results.xml'
+                    }
                 }
             },
             undefined: {
@@ -210,6 +214,18 @@ module.exports = function (grunt) {
                     file: 'undefined-file.json'
                 },
                 results: {
+                }
+            },
+            jshintNoFailures: {
+                options: {
+                    dir: '.tmp/jshintNoFailures',
+                    file: 'results.json'
+                },
+                results: {
+                    jshint: {
+                        file: 'test/fixtures/jshint/jshint-nofailures.xml',
+                        details: true
+                    }
                 }
             }
         },

@@ -62,8 +62,7 @@ exports.code_quality_report = {
     },
     missingFiles: function(test) {
         test.expect(1);
-        //test.ok(!grunt.file.exists('.tmp/does/not/exist/non-existing-file.json'), 'Should not have created a file');
-        var actual = grunt.file.read('.tmp/does/not/exist/non-existing-file.json');
+        var actual = grunt.file.read('.tmp/missing-files/missing-files.json');
         var expected = grunt.file.read('test/expected/missing.json');
         test.equal(actual, expected, 'should write the result in the missing result dir.');
 
@@ -75,6 +74,15 @@ exports.code_quality_report = {
         var actual = grunt.file.read('.tmp/undefined/results/undefined-file.json');
         var expected = grunt.file.read('test/expected/undefined.json');
         test.equal(actual, expected, 'should write the result in the missing result dir.');
+
+        test.done();
+    },
+    jshintNoFailures: function(test) {
+        test.expect(1);
+
+        var actual = grunt.file.read('.tmp/jshintNoFailures/results.json');
+        var expected = grunt.file.read('test/expected/jshintNoFailures.json');
+        test.equals(actual, expected, 'should write the result in the jshintNoFailures result dir');
 
         test.done();
     }

@@ -72,7 +72,6 @@ module.exports = function (grunt) {
                     }
                 }
             }
-
         }
 
         /**
@@ -81,11 +80,7 @@ module.exports = function (grunt) {
          * @param name The name that is used when writing to disk.
          */
         function mergeTestResults(src, name) {
-            //if(typeof name === 'undefined') {
-            //    return undefined;
-            //}
-
-            var result = '<?xml version="1.0"?><testsuites>';
+           var result = '<?xml version="1.0"?><testsuites>';
             grunt.file.expand({filter: 'isFile'}, src).forEach(function (file) {
                 var content = grunt.file.read(file);
                 var matches = /<testsuite [\s\S]*>[\s\S]*<\/testsuite>/g.exec(content);
@@ -140,8 +135,10 @@ module.exports = function (grunt) {
                         }
                         results.push(result);
                     });
+
                 });
             }
+
             return results;
         }
 
@@ -159,6 +156,7 @@ module.exports = function (grunt) {
                 var browser = path.dirname(file).substring(path.dirname(file).lastIndexOf("/")+1)
                 collector.add(JSON.parse(grunt.file.read(file)));
                 var summary = utils.summarizeCoverage(collector.getFinalCoverage());
+                grunt.log.writeflags(summary);
                 results.push({
                     browser: browser,
                     lines: Number(summary.lines.pct),
@@ -191,11 +189,13 @@ module.exports = function (grunt) {
                     if (showDetails) {
                         var details = {};
                         res.testsuite.testcase.forEach(function (key) {
-                            var filename = key.$.name.substring(key.$.name.search(/[^\/]+$/g));
-                            var failures = key.failure[0]._.replace(/\n/g, "###").split("###");
-                            failures.shift();
-                            failures.pop();
-                            details[filename] = failures;
+                            if(typeof key.failure !== 'undefined') {
+                                var filename = key.$.name.substring(key.$.name.search(/[^\/]+$/g));
+                                var failures = key.failure[0]._.replace(/\n/g, "###").split("###");
+                                failures.shift();
+                                failures.pop();
+                                details[filename] = failures;
+                            }
                         });
                         result.failureDetails = details;
                     }

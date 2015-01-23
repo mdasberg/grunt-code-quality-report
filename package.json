@@ -9,7 +9,8 @@
     },
     "contributors": [
         "Remco Vlierman <rcvlierman@gmail.com>",
-        "Maarten van Schelven <maarten.schelven@gmail.com>"
+        "Maarten van Schelven <maarten.schelven@gmail.com>",
+        "Chris Quach <chris@quach.nl>"
     ],
     "repository": {
         "type": "git",

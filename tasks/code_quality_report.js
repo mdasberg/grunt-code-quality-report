@@ -153,13 +153,13 @@ module.exports = function (grunt) {
 
             var results = [];
             grunt.file.expand({filter: 'isFile'}, src).forEach(function (file) {
-                var browser = path.dirname(file).substring(path.dirname(file).lastIndexOf("/")+1)
+                var browser = path.dirname(file).substring(path.dirname(file).lastIndexOf("/")+1);
                 collector.add(JSON.parse(grunt.file.read(file)));
                 var summary = utils.summarizeCoverage(collector.getFinalCoverage());
                 results.push({
                     browser: browser,
                     lines: summary.lines.covered > 0 ? Number(summary.lines.pct) : 0,
-                    branches: summary.branches.covered > 0 ? Number(summary.branches.pct) : 0,
+                    branches: Number(summary.branches.pct),
                     functions: summary.functions.covered > 0 ? Number(summary.functions.pct) : 0,
                     statements: summary.statements.covered > 0 ? Number(summary.statements.pct) : 0
                 });

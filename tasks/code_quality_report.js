@@ -156,7 +156,7 @@ module.exports = function (grunt) {
                 var browser = path.dirname(file).substring(path.dirname(file).lastIndexOf("/")+1)
                 collector.add(JSON.parse(grunt.file.read(file)));
                 var summary = utils.summarizeCoverage(collector.getFinalCoverage());
-                grunt.log.writeflags(summary);
+
                 results.push({
                     browser: browser,
                     lines: Number(summary.lines.pct),
